@@ -1,0 +1,6 @@
+.env
+chroma/
+__pycache__/
+data/
+aws-lambda-developer-guide-main/
+.vscode/
