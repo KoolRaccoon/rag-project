@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 load_dotenv(dotenv_path=r"D:\CodingProjects\rag_project\.env", override=True)
+import streamlit as st
 
 from langchain_community.document_loaders import DirectoryLoader, UnstructuredMarkdownLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -30,20 +31,15 @@ DATA_PATH = "data/"
 CHROMA_PATH = "chroma"
 
 
-def main():
-    # Create CLI
-    parser = argparse.ArgumentParser()
-    parser.add_argument("query_text", type=str, help="The query text.")
-    args = parser.parse_args()
-    query_text = args.query_text
 
-    embedding_function = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
-    db = Chroma(persist_directory = CHROMA_PATH, embedding_function = embedding_function)
-
-
+def query_rag(query_text: str):
+    
     #search the DB
-    results = db.similarity_search_with_relevance_scores(query_text, k=3)
+    embedding_function = HuggingFaceEmbeddings(model_name="all-miniLM-L6-v2")
+    db = Chroma(persist_directory= CHROMA_PATH, embedding_function=embedding_function)
 
+    results = db.similarity_search_with_relevance_scores(query_text, k=3)
+    
     if len(results) == 0 or results[0][1] < 0.2:
         print (f"Unable to find matching results")
         return
@@ -56,8 +52,23 @@ def main():
     response = client.chat.completions.create(
         model="llama-3.3-70b-versatile",
         messages = [{"role": "user", "content": prompt}])
-    
-    print(response.choices[0].message.content)
+
+    return response.choices[0].message.content
+
+
+def main():
+    # Create CLI
+    st.title("AWS Lambda RAG")
+    #parser = argparse.ArgumentParser()
+    #parser.add_argument("query_text", type=str, help="The query text.")
+    #args = parser.parse_args()
+    query_text = st.text_input("Ask a question about AWS Lambda API:")
+    if st.button("Search"):
+        if query_text:
+            with st.spinner("Searching..."):
+                response = query_rag(query_text)
+            st.write(response)
+
 
     #model = ChatHuggingFace()
     
