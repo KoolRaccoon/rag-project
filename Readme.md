@@ -1,31 +1,31 @@
-**This is a simple RAG project**
+# AWS Lambda API RAG
 
+This is a simple RAG (Retrieval-Augemented Generation) project that answers questions about the 
+ documentation the [AWS lambda API reference guide](https://docs.aws.amazon.com/lambda/latest/api/Welcome.html)
+ 
 
-Used the documentation from AWS lambda API reference guide https://docs.aws.amazon.com/lambda/latest/api/Welcome.html as data to read from. All files are converted to markdowns for ingestions
+# How it works
 
-**The process of the RAG**
+1. Load markdown files from the `/data` folder
+2. Split the data into chunks of 300 characters.
+3. Creating embbedings for each chunk that convert the text into vectors of numbers using HuggingFace's `all-MiniLM-L6-v2` model.
+4. Save the text and the embeddings to a ChromaDB database, which will be used to search by similarity.
+5. When a query is submitted, it is embedded with the same model as the data and finds the 3 most similar chunks.
+    - To build the response we are using groq llama-3.3-70b-versatile.
+6. The query response is built by passing the 3 chunks as context into Groq's `llama-3.3-70b-versatile` to generate the final answer.
+7. The app uses streamlit as a minimal gui:
 
-Load the data from /data folder
-Split the data into chunks of 300 characters.
-Creating embbedings for each chunk that convert the text into vectors of numbers using HuggingFace's all-MiniLM-L6-v2 model.
+# Setup
+1. Create and activate a virtual environment (with Conda for example)
+2. Install the dependencies using `pip install -r requirements.txt`
+3. Create a `.env` file in the root directory that will contain the Groq api key as follows:
 
-Save the text and the embbedings to a Chroma database, which will be used to search by similarity.
+`GROQ_API_KEY=`
 
-When a query is created it is embedded with the same model as the data and finds the 3 most similar chunks.
-
-To build the response we are using groq llama-3.3-70b-versatile.
-The query response is built out of 3 chunks as context into the ai model to generate the final answer.
-
-
-The app uses streamlit as a minimal gui:
 
 To run go to the main directory where main.py is located and run the following command:
 
 `streamlit run main.py`
-
-make sure you create a virtual env, install the requirements.txt and the start your venv before you run 
-You will also need to have a .env file with the API key to the llm model you want to use.
-Add your key as follow: 'GROQ_API_KEY=' in the file.
 
 Here's an example of a query after the program is started:
 
