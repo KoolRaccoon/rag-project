@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-load_dotenv(dotenv_path=r"D:\CodingProjects\rag_project\.env", override=True)
+load_dotenv(dotenv_path=r"\.env", override=True)
 
 
 from langchain_community.document_loaders import DirectoryLoader, UnstructuredMarkdownLoader

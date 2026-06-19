@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-load_dotenv(dotenv_path=r"D:\CodingProjects\rag_project\.env", override=True)
+load_dotenv(dotenv_path=r"\.env", override=True)
 import streamlit as st
 
 from langchain_community.document_loaders import DirectoryLoader, UnstructuredMarkdownLoader
@@ -77,3 +77,4 @@ if __name__ == "__main__":
     if not os.path.exists(CHROMA_PATH):
         create_database()
     main()
+    # run with : streamlit run main.py

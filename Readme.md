@@ -1,9 +1,9 @@
-*This is a simple RAG project*
+**This is a simple RAG project**
 
 
 Used the documentation from AWS lambda API reference guide https://docs.aws.amazon.com/lambda/latest/api/Welcome.html as data to read from. All files are converted to markdowns for ingestions
 
-*The process of the RAG*
+**The process of the RAG**
 
 Load the data from /data folder
 Split the data into chunks of 300 characters.
@@ -24,7 +24,10 @@ To run go to the main directory where main.py is located and run the following c
 `streamlit run main.py`
 
 make sure you create a virtual env, install the requirements.txt and the start your venv before you run 
+You will also need to have a .env file with the API key to the llm model you want to use.
+Add your key as follow: 'GROQ_API_KEY=' in the file.
 
 Here's an example of a query after the program is started:
 
 ![App Screenshot](assets/AWS_Lambda_rag_example_prompt.png)
+
