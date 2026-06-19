@@ -27,4 +27,4 @@ make sure you create a virtual env, install the requirements.txt and the start y
 
 Here's an example of a query after the program is started:
 
-![App Screenshot](assets/screenshot.png)
+![App Screenshot](assets/AWS_Lambda_rag_example_prompt.png)
